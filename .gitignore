@@ -17,11 +17,15 @@ __pycache__/
 venv/
 .pytest_cache/
 .ruff_cache/
+*.egg-info/
 
 # Node
 node_modules/
 dist/
 coverage/
+
+# TypeScript
+*.tsbuildinfo
 
 # Local data
 *.db

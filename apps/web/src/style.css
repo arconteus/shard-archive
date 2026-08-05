@@ -1,0 +1,75 @@
+:root {
+  color: #e8e6df;
+  background: #151719;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+main {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem;
+}
+
+.intro {
+  width: min(100%, 42rem);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: #b5a77a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.description {
+  margin: 1.5rem 0 2.5rem;
+  color: #aaa9a4;
+  font-size: 1.1rem;
+}
+
+.api-status {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  color: #aaa9a4;
+}
+
+.status-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #d3a94c;
+}
+
+.available .status-dot {
+  background: #61b47b;
+}
+
+.unavailable .status-dot {
+  background: #cf6868;
+}
+
