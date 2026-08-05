@@ -60,6 +60,20 @@ Create a production build from `apps/web`:
 npm run build
 ```
 
+### Convenience scripts
+
+From the repository root, start the API and web client together:
+
+```shell
+node scripts/dev.mjs
+```
+
+Run the backend tests, frontend type check, and frontend build:
+
+```shell
+node scripts/check.mjs
+```
+
 ## License
 
 GNU AGPL v3
