@@ -114,7 +114,7 @@ Entities are not directly sourced.
 
 Sources belong to Fragments.
 
-Evidence flows like this:
+One simplified provenance view is:
 
 Source
 
@@ -127,6 +127,9 @@ Fragment
 Entity
 
 This prevents the archive from losing provenance.
+
+Claims, Evidence, or Interpretations may add intermediate domain objects in a
+future model; their status is still unresolved.
 
 ## AI Behavior
 

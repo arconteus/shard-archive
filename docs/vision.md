@@ -135,7 +135,7 @@ A user should be able to:
 2. Add fragments of information.
 3. Create entities such as characters, locations, objects, factions, and events.
 4. Connect fragments and entities through typed relationships.
-5. record the source and confidence level of information.
+5. Record the source and confidence level of information.
 6. Explore the resulting knowledge graph.
 7. Search the archive using text and semantic meaning.
 8. Use a local AI model to suggest classifications and possible connections.

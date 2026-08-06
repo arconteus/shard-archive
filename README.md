@@ -35,9 +35,11 @@ uv run uvicorn shard_archive_api.main:app --reload
 The API is available at `http://localhost:8000`. Verify it with
 `http://localhost:8000/health`.
 
-Run the backend tests from `apps/api`:
+Run backend linting, formatting checks, and tests from `apps/api`:
 
 ```powershell
+uv run ruff check .
+uv run ruff format --check .
 uv run pytest
 ```
 
@@ -57,6 +59,9 @@ To use a different API address, set `VITE_API_URL` before starting Vite.
 Create a production build from `apps/web`:
 
 ```powershell
+npm run lint
+npm run format:check
+npm run typecheck
 npm run build
 ```
 
@@ -68,7 +73,7 @@ From the repository root, start the API and web client together:
 node scripts/dev.mjs
 ```
 
-Run the backend tests, frontend type check, and frontend build:
+Run all backend and frontend quality checks:
 
 ```shell
 node scripts/check.mjs

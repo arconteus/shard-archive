@@ -122,7 +122,9 @@ The engine represents the heart of Shard Archive.
 
 ## Repository Layer
 
-Repositories abstract persistence.
+Repository interfaces abstract persistence. These interfaces belong to an inner
+domain or application layer and describe only the operations that layer needs.
+Infrastructure supplies concrete implementations.
 
 The Knowledge Engine should not know whether data is stored in:
 
@@ -155,23 +157,25 @@ The domain never depends on infrastructure.
 
 # Dependency Direction
 
-Dependencies always point inward.
+Source-code dependencies always point inward. Outer adapters depend on the
+application and domain abstractions; the inner layers never import concrete
+adapters.
 
-```
-UI
- ↓
-API
- ↓
-Application
- ↓
-Knowledge Engine
- ↓
-Repositories
- ↓
-Infrastructure
+```text
+UI / FastAPI adapters ───────────────┐
+Persistence / AI adapters ──────────┼──> Application / Knowledge Engine
+                                    │              │
+                                    └──────────────┴──> Required interfaces
 ```
 
-Infrastructure must never contain business rules.
+At runtime, an application use case may call a repository interface and reach an
+infrastructure implementation through dependency injection. That runtime call
+does not reverse the source-code dependency: infrastructure implements the
+inner interface and depends on its contract.
+
+The domain and application layers must not import SQLite, SQLAlchemy, FastAPI,
+Ollama, or any other concrete infrastructure technology. Infrastructure must
+never contain business rules.
 
 ---
 

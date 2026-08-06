@@ -117,21 +117,24 @@ Sources provide provenance.
 
 ---
 
-# Claim
+# Claim (Planned Concept)
 
-A statement extracted from one or more fragments.
+A working term for a statement extracted from one or more fragments.
 
 Claims are not necessarily true.
 
-They represent information asserted by a source.
+They may represent information asserted by a source, but whether a Claim should
+be a first-class domain object remains unresolved.
 
 ---
 
-# Evidence
+# Evidence (Planned Concept)
 
-Information supporting or contradicting a claim.
+A working term for information supporting or contradicting a claim or
+relationship.
 
-Evidence always references one or more fragments.
+Current documentation traces support back to one or more Fragments. Whether
+Evidence needs its own identity and lifecycle remains unresolved.
 
 ---
 
@@ -145,11 +148,14 @@ Shard Archive does not define canon automatically.
 
 ---
 
-# Interpretation
+# Interpretation (Planned Concept)
 
-A user-generated conclusion based on evidence.
+A working term for a user-generated conclusion based on supporting material.
 
 Interpretations should remain distinguishable from source material.
+
+The domain model must still decide whether Claims, Evidence, and Interpretations
+are first-class objects or projections over other knowledge objects.
 
 ---
 

@@ -223,7 +223,7 @@ The following rules should remain true:
 3. A Fragment must retain its original content or revision history.
 4. AI-generated content must remain identifiable.
 5. Classification is optional and reversible.
-6. A Fragment may support multiple claims.
+6. A Fragment may support multiple Claims if Claims are adopted as first-class objects.
 7. A Fragment may reference multiple entities.
 8. A Fragment is not automatically considered true or canonical.
 

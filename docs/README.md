@@ -17,12 +17,13 @@ Shard Archive is a local-first knowledge graph designed for narrative worlds, wo
 ### Architecture
 
 - [Architecture Overview](architecture/overview.md)
-- [Technology Stack](architecture/tech-stack.md)
-- [Project Structure](architecture/project-structure.md)
-- [API Design](architecture/api.md)
-- [Knowledge Graph Model](architecture/graph-model.md)
-- [AI Integration](architecture/ai.md)
-- [Security and Privacy](architecture/security.md)
+- [Knowledge Engine](architecture/knowledge-engine.md)
+- Planned: Technology Stack
+- Planned: Project Structure
+- Planned: API Design
+- Planned: Knowledge Graph Model
+- Planned: AI Integration
+- Planned: Security and Privacy
 
 ### Domain Model
 
@@ -37,23 +38,23 @@ Shard Archive is a local-first knowledge graph designed for narrative worlds, wo
 
 - [ADR-0001: Monorepo](adr/ADR-0001-monorepo.md)
 - [ADR-0002: Python and FastAPI](adr/ADR-0002-python-fastapi.md)
-- [ADR-0003: Vue 3 and TypeScript](adr/ADR-0003-vue3-typescript.md)
-- [ADR-0004: Local-First Architecture](adr/ADR-0004-local-first.md)
+- [ADR-0003: Local-First Architecture](adr/ADR-0003-local-first.md)
+- [ADR-0004: Vue 3 and TypeScript](adr/ADR-0004-vue3-typescript.md)
 
 ### Development
 
-- [Development Setup](development/setup.md)
-- [Coding Style](development/coding-style.md)
-- [Branching Strategy](development/branching.md)
-- [Pull Request Guidelines](development/pull-requests.md)
-- [Testing Strategy](development/testing.md)
+- Planned: Development Setup
+- Planned: Coding Style
+- Planned: Branching Strategy
+- Planned: Pull Request Guidelines
+- Planned: Testing Strategy
 
 ### Research
 
-- [Graph Databases](research/graph-databases.md)
-- [Embeddings and Semantic Search](research/embeddings.md)
-- [Local AI and Ollama](research/ollama.md)
-- [Related Projects and Inspiration](research/inspiration.md)
+- Planned: Graph Databases
+- Planned: Embeddings and Semantic Search
+- Planned: Local AI and Ollama
+- Planned: Related Projects and Inspiration
 
 ## Documentation Status
 

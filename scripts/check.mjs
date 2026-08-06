@@ -11,10 +11,34 @@ const npmInvocation =
 
 const checks = [
   {
+    label: 'backend lint',
+    command: 'uv',
+    args: ['run', 'ruff', 'check', '.'],
+    directory: join(repositoryRoot, 'apps', 'api'),
+  },
+  {
+    label: 'backend format check',
+    command: 'uv',
+    args: ['run', 'ruff', 'format', '--check', '.'],
+    directory: join(repositoryRoot, 'apps', 'api'),
+  },
+  {
     label: 'backend tests',
     command: 'uv',
     args: ['run', 'pytest'],
     directory: join(repositoryRoot, 'apps', 'api'),
+  },
+  {
+    label: 'frontend lint',
+    command: npmInvocation.command,
+    args: [...npmInvocation.args, 'run', 'lint'],
+    directory: join(repositoryRoot, 'apps', 'web'),
+  },
+  {
+    label: 'frontend format check',
+    command: npmInvocation.command,
+    args: [...npmInvocation.args, 'run', 'format:check'],
+    directory: join(repositoryRoot, 'apps', 'web'),
   },
   {
     label: 'frontend type check',

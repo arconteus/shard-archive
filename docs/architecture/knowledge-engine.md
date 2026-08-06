@@ -18,7 +18,7 @@ The archive should preserve every stage of that evolution.
 
 ## Knowledge Flow
 
-Information enters the system through Sources.
+One current, illustrative flow begins with Sources.
 
 Sources produce Fragments.
 
@@ -26,9 +26,9 @@ Fragments describe Entities.
 
 Entities are connected through Relationships.
 
-The resulting graph becomes searchable, explorable, and analyzable.
-
-```
+The resulting graph becomes searchable, explorable, and analyzable. This flow is
+not a finalized domain model: Claims, Evidence, and Interpretations may become
+first-class objects or remain derived concepts.
 
 ```text
 Source
@@ -82,23 +82,29 @@ Relationships may exist with varying confidence.
 
 ## Evidence
 
-Every Relationship may reference one or more Fragments.
+Every Relationship may reference one or more supporting Fragments.
 
 Every Fragment may reference one or more Sources.
 
-This creates a complete provenance chain.
-
-```
+This creates a traceable provenance chain without deciding whether Evidence is
+a separate domain object.
 
 ```text
 Relationship
-      ↓
-Evidence
-      ↓
+      ↓ supported by
 Fragment
       ↓
 Source
 ```
+
+## Open Domain Questions
+
+Claims, Evidence, and Interpretations are working concepts rather than finalized
+domain objects. A future domain decision must determine whether Claims and
+Evidence should be first-class objects with their own identity and lifecycle, or
+whether they should remain relationships or projections over Fragments. That
+decision must also clarify how Interpretations reference their supporting
+material.
 
 ## Knowledge Graph
 
