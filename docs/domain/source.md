@@ -103,15 +103,12 @@ Metadata should describe the Source rather than the extracted knowledge.
 
 A Source provides provenance.
 
-Users should always be able to trace:
+Users should always be able to trace supporting information without requiring a
+specific Evidence object:
 
 Relationship
 
-↓
-
-Evidence
-
-↓
+↓ supported by
 
 Fragment
 
@@ -119,7 +116,8 @@ Fragment
 
 Source
 
-This chain should remain intact throughout the lifetime of the project.
+This chain should remain intact throughout the lifetime of the project. Whether
+Evidence becomes a first-class domain object is an unresolved domain decision.
 
 ## Reliability
 
