@@ -2,83 +2,127 @@
 
 > Local-first knowledge graph for narrative worlds.
 
-Shard Archive is an open-source platform for creating, organizing and analyzing narrative knowledge through interconnected fragments.
+Shard Archive is an open-source platform for creating, organizing, and
+analyzing narrative knowledge through interconnected fragments.
 
-Instead of storing long documents, Shard Archive models worlds as semantic graphs where every fragment, entity and relationship becomes part of an explorable knowledge network.
-
-## Vision
-
-- Fragment-first knowledge model
-- Semantic graph
-- Local-first
-- AI-assisted analysis
-- Canon and perspective management
+Instead of storing worlds as isolated documents, Shard Archive models fragments,
+entities, sources, and relationships as an explorable semantic network. The
+project prioritizes local ownership, traceable provenance, and AI as an optional
+assistant rather than an authority.
 
 ## Status
 
-🚧 Early development.
+Shard Archive is in early development. The current repository contains the
+initial FastAPI backend, Vue web client, project documentation, automated
+checks, and development tooling.
 
-## Development
+## Principles
 
-The API and web client are independent applications intended to run locally.
+- Local-first operation and data ownership;
+- fragment-first knowledge capture;
+- explicit relationships and provenance;
+- independent backend and frontend applications;
+- AI-assisted workflows with user confirmation;
+- progressive complexity instead of premature infrastructure.
 
-### Backend
+## Repository Structure
 
-Requirements: [uv](https://docs.astral.sh/uv/).
-
-```powershell
-cd apps/api
-uv sync
-uv run uvicorn shard_archive_api.main:app --reload
+```text
+shard-archive/
+├── apps/
+│   ├── api/       # FastAPI application
+│   └── web/       # Vue 3 application
+├── docs/          # Product, architecture, and domain documentation
+├── scripts/       # Codekeeper and its focused development commands
+└── package.json   # Repository-level Codekeeper entry point
 ```
 
-The API is available at `http://localhost:8000`. Verify it with
-`http://localhost:8000/health`.
+## Development with Codekeeper
 
-Run backend linting, formatting checks, and tests from `apps/api`:
+Codekeeper is the development console for Shard Archive. Like an early,
+project-specific Artisan, it provides one interface for preparing the workspace,
+starting the applications, and validating the repository.
 
-```powershell
-uv run ruff check .
-uv run ruff format --check .
-uv run pytest
-```
+### Requirements
 
-### Frontend
+Codekeeper requires:
 
-Requirements: Node.js and npm.
+- [Node.js](https://nodejs.org/) and npm;
+- [uv](https://docs.astral.sh/uv/) for Python environment management;
+- Git when working from a cloned repository.
 
-```powershell
-cd apps/web
-npm install
-npm run dev
-```
+Codekeeper manages the project dependencies after those tools are available.
 
-Open `http://localhost:5173`. The web client checks the local API health endpoint.
-To use a different API address, set `VITE_API_URL` before starting Vite.
+### Start Codekeeper
 
-Create a production build from `apps/web`:
-
-```powershell
-npm run lint
-npm run format:check
-npm run typecheck
-npm run build
-```
-
-### Convenience scripts
-
-From the repository root, start the API and web client together:
+From the repository root, run:
 
 ```shell
-node scripts/dev.mjs
+npm run codekeeper
 ```
 
-Run all backend and frontend quality checks:
+On its first run, Codekeeper prepares its own terminal dependency automatically.
+No separate project dependency installation command is required.
+
+Use the interactive menu to:
+
+- prepare the backend and frontend;
+- start the local development environment;
+- run tests and quality checks;
+- fix backend and frontend formatting;
+- exit safely.
+
+The menu supports keyboard navigation and Ctrl+C cancellation.
+
+### Direct Codekeeper Commands
+
+Codekeeper also supports non-interactive commands:
 
 ```shell
-node scripts/check.mjs
+npm run codekeeper -- setup
+npm run codekeeper -- dev
+npm run codekeeper -- check
+npm run codekeeper -- format
+npm run codekeeper -- help
 ```
+
+These commands expose the same workflows as the interactive menu and are useful
+for automation or terminals without interactive input.
+
+For complete usage and troubleshooting, read the
+[Codekeeper guide](docs/tools/codekeeper.md).
+
+## Local Services
+
+When Codekeeper starts the development environment, the applications are
+available at:
+
+- Web client: `http://localhost:5173`;
+- API: `http://localhost:8000`;
+- API health endpoint: `http://localhost:8000/health`.
+
+Use Ctrl+C in the Codekeeper session to stop both applications.
+
+## Documentation
+
+Project documentation starts at [docs/README.md](docs/README.md) and includes:
+
+- product vision and philosophy;
+- product requirements and roadmap;
+- architecture and Architecture Decision Records;
+- domain concepts;
+- development and research notes;
+- optional development tools such as Graphify.
+
+The documentation describes the intended direction of the project. Decisions may
+evolve as implementation and research provide new evidence.
+
+## Contributing
+
+Keep changes focused and consistent with the documented local-first architecture.
+Major architectural decisions should be recorded through an Architecture Decision
+Record. Use Codekeeper to run the repository checks before opening a pull request.
 
 ## License
 
-GNU AGPL v3
+Shard Archive is licensed under the [GNU Affero General Public License v3.0](LICENSE).
