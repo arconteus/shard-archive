@@ -1,7 +1,6 @@
 import { spawn } from 'node:child_process'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { cancel, intro, isCancel, log, outro, select } from '@clack/prompts'
 
 const scriptsDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = dirname(scriptsDirectory)
@@ -13,6 +12,30 @@ const npmInvocation =
     : { command: 'npm', args: [] }
 const colorEnabled = !('NO_COLOR' in process.env)
 const pink = (text) => (colorEnabled ? `\u001B[38;2;255;125;173m${text}\u001B[39m` : text)
+
+async function loadPrompts() {
+  try {
+    return await import('@clack/prompts')
+  } catch (error) {
+    const missingClack =
+      error instanceof Error &&
+      error.code === 'ERR_MODULE_NOT_FOUND' &&
+      error.message.includes('@clack/prompts')
+
+    if (!missingClack) throw error
+
+    console.log(pink('Preparing Codekeeper for its first run...'))
+
+    if (process.platform === 'win32' && !process.env.NODE_USE_SYSTEM_CA) {
+      process.env.NODE_USE_SYSTEM_CA = '1'
+    }
+
+    await run(npmInvocation.command, [...npmInvocation.args, 'install'], repositoryRoot)
+    return import('@clack/prompts')
+  }
+}
+
+const { cancel, intro, isCancel, log, outro, select } = await loadPrompts()
 const archiveKeeperArt = `
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡴⠚⠋⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -46,6 +69,10 @@ const actions = {
   check: {
     label: 'Run tests and quality checks',
     run: () => run(process.execPath, [join(scriptsDirectory, 'check.mjs')]),
+  },
+  format: {
+    label: 'Fix project formatting',
+    run: () => run(process.execPath, [join(scriptsDirectory, 'format.mjs')]),
   },
 }
 
@@ -84,6 +111,7 @@ Commands:
   setup   Install backend and frontend dependencies
   dev     Start the API and web client
   check   Run tests and quality checks
+  format  Fix backend and frontend formatting
   help    Show this help message`)
 }
 
@@ -111,6 +139,11 @@ async function showMenu() {
         value: 'check',
         label: `${pink('◆')} Run tests and quality checks`,
         hint: 'backend + frontend',
+      },
+      {
+        value: 'format',
+        label: `${pink('◆')} Fix project formatting`,
+        hint: 'Ruff + Prettier',
       },
       { value: 'exit', label: `${pink('◇')} Exit` },
     ],

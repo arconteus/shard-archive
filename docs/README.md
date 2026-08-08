@@ -51,6 +51,7 @@ Shard Archive is a local-first knowledge graph designed for narrative worlds, wo
 
 ### Development Tools
 
+- [Codekeeper](tools/codekeeper.md)
 - [Graphify](tools/graphify.md)
 
 ### Research

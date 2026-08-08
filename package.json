@@ -7,7 +7,8 @@
     "codekeeper": "node scripts/codekeeper.mjs",
     "setup": "node scripts/codekeeper.mjs setup",
     "dev": "node scripts/dev.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "format": "node scripts/format.mjs"
   },
   "devDependencies": {
     "@clack/prompts": "^1.7.0"
