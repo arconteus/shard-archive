@@ -1,0 +1,12 @@
+{
+  "name": "shard-archive",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "codekeeper": "node scripts/codekeeper.mjs",
+    "setup": "node scripts/codekeeper.mjs setup",
+    "dev": "node scripts/dev.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}

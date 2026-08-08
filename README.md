@@ -67,6 +67,21 @@ npm run build
 
 ### Convenience scripts
 
+Use Codekeeper for an interactive development menu:
+
+```shell
+npm run codekeeper
+```
+
+The menu can install backend and frontend dependencies, start both applications,
+or run the repository checks. The same actions are also available directly:
+
+```shell
+npm run setup
+npm run dev
+npm run check
+```
+
 From the repository root, start the API and web client together:
 
 ```shell
