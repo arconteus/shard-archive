@@ -67,6 +67,49 @@ The code-only workflow uses local AST parsing. Without an optional LLM backend,
 community names may remain generic, but the extracted nodes and relationships
 are still available.
 
+## Optional Local AI with Ollama
+
+Graphify can use [Ollama](https://docs.ollama.com/windows) to run semantic
+analysis with a model hosted entirely on the local machine. This does not
+require a cloud API key.
+
+Install Ollama, then download and test a local coding model:
+
+```powershell
+ollama pull qwen2.5-coder:7b
+ollama run qwen2.5-coder:7b
+```
+
+Install Graphify with its optional Ollama support:
+
+```powershell
+uv tool install --force "graphifyy[ollama]"
+```
+
+From the repository root, configure Graphify for the current PowerShell session
+and run the extraction:
+
+```powershell
+$env:OLLAMA_BASE_URL = "http://localhost:11434"
+$env:OLLAMA_MODEL = "qwen2.5-coder:7b"
+graphify extract . --backend ollama --max-concurrency 2
+```
+
+Generate and open the resulting visualization:
+
+```powershell
+graphify cluster-only .
+Invoke-Item .\graphify-out\graph.html
+```
+
+The environment variables above apply only to the current PowerShell session.
+Use `--max-concurrency 1` if local inference consumes too many resources. Model
+downloads require several gigabytes of storage, and the exact memory usage
+depends on the selected model.
+
+Ollama is an optional developer tool. It is not a Shard Archive runtime
+dependency and should not be added to the backend or frontend dependency files.
+
 ## Query the Graph
 
 After generating `graph.json`, query it from the repository root:
