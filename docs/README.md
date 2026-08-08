@@ -49,6 +49,10 @@ Shard Archive is a local-first knowledge graph designed for narrative worlds, wo
 - Planned: Pull Request Guidelines
 - Planned: Testing Strategy
 
+### Development Tools
+
+- [Graphify](tools/graphify.md)
+
 ### Research
 
 - Planned: Graph Databases
