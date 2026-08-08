@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process'
 import { dirname, join } from 'node:path'
-import { createInterface } from 'node:readline/promises'
 import { fileURLToPath } from 'node:url'
+import { cancel, intro, isCancel, log, outro, select } from '@clack/prompts'
 
 const scriptsDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = dirname(scriptsDirectory)
@@ -11,6 +11,28 @@ const npmInvocation =
   process.platform === 'win32'
     ? { command: process.env.ComSpec ?? 'cmd.exe', args: ['/d', '/s', '/c', 'npm'] }
     : { command: 'npm', args: [] }
+const colorEnabled = !('NO_COLOR' in process.env)
+const pink = (text) => (colorEnabled ? `\u001B[38;2;255;125;173m${text}\u001B[39m` : text)
+const archiveKeeperArt = `
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡴⠚⠋⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠖⠋⠁⠀⠀⠀⢸⠃⠀⠀⠀⣠⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠁⠀⠀⠀⠀⠀⢠⠟⠀⣀⡴⠋⡁⠸⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⣰⠀⠀⠀⠀⠀⣠⢏⡤⠞⢁⡴⠋⠀⠀⡇⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣧⠀⡇⠀⠀⠀⠀⣴⠿⠋⣠⠞⠁⠀⠀⠀⣸⠛⠛⠛⠛⠲⢦⣄⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠖⠻⣦⡧⠀⠀⣤⠞⠁⣠⠞⠁⠀⠀⠀⣀⡴⠃⠀⠀⠀⠀⠀⠀⠈⠙⢦⡀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⠏⠀⠀⠀⠀⠃⠀⠀⠀⠀⠀⣿⣤⣤⡴⠶⠞⠻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⡄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣆⠀
+⣠⣶⣤⣀⡀⠀⠀⠀⠀⠀⢠⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⡤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀
+⢿⣄⠈⠁⣽⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣇
+⠈⠛⠓⠚⠋⠀⠀⠀⠀⠀⢸⡇⢰⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠘⣷⠘⣿⣿⠅⠀⢷⡴⠀⠀⠀⠀⠘⣿⣿⡇⠈⣳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇
+⠀⠀⠀⠀⠀⠀⠀⢠⠤⠒⢲⡟⠃⠈⠁⠀⠀⠈⠁⠀⠀⠀⠀⠀⠙⠋⠣⠼⢛⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠇
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢯⠙⠛⠒⠖⠚⠛⠛⠷⠦⠤⠤⠤⠴⠋⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠏⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠾⠋⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣻⣦⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡶⣿⠀⢀⣉⡏⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠙⠛⠛⠚⠉⠉⠙⠛⠛⠛⠛⠛⠓⠚⠛⠋⠙⠓⠛⠒⠓⠋⠀⠀⠀⠀⠀⠀`
 
 const actions = {
   setup: {
@@ -42,13 +64,13 @@ function run(command, args, directory = repositoryRoot) {
 }
 
 async function installDependencies() {
-  console.log('\nInstalling backend dependencies...')
+  log.step(pink('Installing backend dependencies'))
   await run('uv', ['sync'], apiDirectory)
 
-  console.log('\nInstalling frontend dependencies...')
+  log.step(pink('Installing frontend dependencies'))
   await run(npmInvocation.command, [...npmInvocation.args, 'install'], webDirectory)
 
-  console.log('\nProject dependencies installed.')
+  log.success(pink('Project dependencies installed'))
 }
 
 function printHelp() {
@@ -66,26 +88,45 @@ Commands:
 }
 
 async function showMenu() {
-  const terminal = createInterface({ input: process.stdin, output: process.stdout })
-
-  console.log('\nShard Archive — Codekeeper\n')
-  console.log('1. Install project dependencies')
-  console.log('2. Start the API and web client')
-  console.log('3. Run tests and quality checks')
-  console.log('0. Exit\n')
-
-  let choice
-  try {
-    choice = await terminal.question('Select an option: ')
-  } finally {
-    terminal.close()
+  if ((process.stdout.columns ?? 80) >= 66) {
+    console.log(pink(archiveKeeperArt))
   }
 
-  const command = { 1: 'setup', 2: 'dev', 3: 'check' }[choice.trim()]
+  intro(pink('◆ SHARD ARCHIVE · CODEKEEPER'))
 
-  if (choice.trim() === '0') return
-  if (!command) throw new Error('Invalid option.')
+  const command = await select({
+    message: pink('What would you like to do?'),
+    options: [
+      {
+        value: 'dev',
+        label: `${pink('◆')} Start development environment`,
+        hint: 'API + web',
+      },
+      {
+        value: 'setup',
+        label: `${pink('◆')} Install project dependencies`,
+        hint: 'uv + npm',
+      },
+      {
+        value: 'check',
+        label: `${pink('◆')} Run tests and quality checks`,
+        hint: 'backend + frontend',
+      },
+      { value: 'exit', label: `${pink('◇')} Exit` },
+    ],
+  })
 
+  if (isCancel(command)) {
+    cancel(pink('Operation cancelled'))
+    return
+  }
+
+  if (command === 'exit') {
+    outro(pink('See you in the Archive'))
+    return
+  }
+
+  outro(pink(actions[command].label))
   await actions[command].run()
 }
 
@@ -114,6 +155,6 @@ async function main() {
 try {
   await main()
 } catch (error) {
-  console.error(`\nCodekeeper error: ${error instanceof Error ? error.message : error}`)
+  log.error(pink(`Codekeeper error: ${error instanceof Error ? error.message : error}`))
   process.exitCode = 1
 }
