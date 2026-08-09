@@ -74,26 +74,6 @@ const actions = {
     label: 'Fix project formatting',
     run: () => run(process.execPath, [join(scriptsDirectory, 'format.mjs')]),
   },
-  'memory:new': {
-    label: 'Create local task memory',
-    run: () => runAiHarness('memory:new'),
-  },
-  'memory:status': {
-    label: 'Show active task memory',
-    run: () => runAiHarness('memory:status'),
-  },
-  'memory:close': {
-    label: 'Close active task memory',
-    run: () => runAiHarness('memory:close'),
-  },
-  'ai:check': {
-    label: 'Check AI harness',
-    run: () => runAiHarness('ai:check'),
-  },
-}
-
-function runAiHarness(command) {
-  return run(process.execPath, [join(scriptsDirectory, 'ai-harness.mjs'), command, ...process.argv.slice(3)])
 }
 
 function run(command, args, directory = repositoryRoot) {
@@ -132,10 +112,6 @@ Commands:
   dev     Start the API and web client
   check   Run tests and quality checks
   format  Fix backend and frontend formatting
-  memory:new [name]  Create and activate local task memory
-  memory:status      Show active task memory
-  memory:close       Complete and deactivate the active task
-  ai:check           Validate the AI harness
   help    Show this help message`)
 }
 
@@ -168,26 +144,6 @@ async function showMenu() {
         value: 'format',
         label: `${pink('◆')} Fix project formatting`,
         hint: 'Ruff + Prettier',
-      },
-      {
-        value: 'memory:new',
-        label: `${pink('◆')} Create local task memory`,
-        hint: 'private + ignored',
-      },
-      {
-        value: 'memory:status',
-        label: `${pink('◆')} Show active task memory`,
-        hint: 'status + next action',
-      },
-      {
-        value: 'memory:close',
-        label: `${pink('◆')} Close active task memory`,
-        hint: 'confirmation required',
-      },
-      {
-        value: 'ai:check',
-        label: `${pink('◆')} Check AI harness`,
-        hint: 'policy + Graphify',
       },
       { value: 'exit', label: `${pink('◇')} Exit` },
     ],

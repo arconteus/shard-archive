@@ -16,7 +16,7 @@ The repository always wins. Correct stale memory instead of trusting it.
 ## Session Workflow
 
 1. Inspect HEAD, working-tree state, and relevant files.
-2. Read the active task memory when `.ai/active-task` exists.
+2. Inspect `.ai/tasks/` and read the relevant active task memory when it exists.
 3. Consult available Graphify context before repeating broad searches.
 4. Verify memory and Graphify claims against authoritative files.
 5. Update memory after meaningful findings, decisions, progress, or validation.
@@ -33,21 +33,19 @@ against the repository. Missing output must never block work. See the
 
 ## Local Task Memory
 
-Create one private memory per active task from `.ai/tasks/TEMPLATE.md`. Use the
-[AI harness commands](commands.md) to create, inspect, or close it.
-
-`memory:close` requires human confirmation, marks the task completed, and clears
-the active pointer without deleting the memory file.
+Create one private memory per active task by copying `.ai/tasks/TEMPLATE.md` to
+a short kebab-case filename. Agents manage these Markdown files with ordinary
+file reading and editing operations; no custom memory tool is required.
 
 Persist conclusions, evidence paths, decisions, rejected approaches, progress,
 validation state, known issues, and the next action. Do not store transcripts,
 chain-of-thought, copied code, large diffs, command logs, speculation, secrets,
 credentials, sensitive customer data, or unnecessary personal data.
 
-Active memories and `.ai/active-task` are ignored by Git. Never stage, commit,
-push, attach, or transfer them through a pull request. Only `TEMPLATE.md` is
-shared. Move team-relevant knowledge to code, tests, docs, an ADR, an issue, or
-the pull request description.
+Active memories are ignored by Git. Never stage, commit, push, attach, or
+transfer them through a pull request. Only `TEMPLATE.md` is shared. Move
+team-relevant knowledge to code, tests, docs, an ADR, an issue, or the pull
+request description.
 
 ## Staleness and Validation
 
@@ -58,9 +56,10 @@ rerun checks.
 Record each validation result with the short HEAD SHA, clean/dirty state, and
 relevant changed paths. A pass applies only to that repository state.
 
-Use the shared repository workflows documented in the
-[Codekeeper guide](../docs/tools/codekeeper.md). Report failures honestly and do
-not create AI-only alternatives to those commands.
+Use the concise [repository command reference](commands.md). Open the full
+[Codekeeper guide](../docs/tools/codekeeper.md) only for details or
+troubleshooting. Report failures honestly and do not create AI-only alternatives
+to those commands.
 
 ## Provider Compatibility
 
