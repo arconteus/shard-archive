@@ -37,5 +37,6 @@ coverage/
 graphify-out/
 
 # Local AI task memory
+.ai/active-task
 .ai/tasks/*.md
 !.ai/tasks/TEMPLATE.md

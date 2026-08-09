@@ -44,6 +44,10 @@ The Codekeeper menu provides these actions:
 - **Install project dependencies** installs API and web dependencies;
 - **Run tests and quality checks** runs the repository validation script;
 - **Fix project formatting** applies Ruff and Prettier to the project;
+- **Create local task memory** creates an ignored memory file and activates it;
+- **Show active task memory** displays its status, Git state, and next action;
+- **Close active task memory** requires confirmation and clears the local pointer;
+- **Check AI harness** validates its structure, privacy policy, and Graphify state;
 - **Exit** closes Codekeeper without starting another process.
 
 Use the arrow keys to select an action and press Enter to run it. Press Ctrl+C
@@ -58,6 +62,10 @@ npm run codekeeper -- setup
 npm run codekeeper -- dev
 npm run codekeeper -- check
 npm run codekeeper -- format
+npm run codekeeper -- memory:new <task-name>
+npm run codekeeper -- memory:status
+npm run codekeeper -- memory:close
+npm run codekeeper -- ai:check
 npm run codekeeper -- help
 ```
 

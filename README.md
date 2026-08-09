@@ -83,6 +83,10 @@ npm run codekeeper -- setup
 npm run codekeeper -- dev
 npm run codekeeper -- check
 npm run codekeeper -- format
+npm run codekeeper -- memory:new <task-name>
+npm run codekeeper -- memory:status
+npm run codekeeper -- memory:close
+npm run codekeeper -- ai:check
 npm run codekeeper -- help
 ```
 
