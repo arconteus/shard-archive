@@ -1,36 +1,36 @@
 # AI Development Instructions
 
-The repository is authoritative. Source code, configuration, tests,
+The repository is authoritative. Source code, configuration, tests, migrations,
 documentation, dependencies, and Git state override any remembered claim.
 
-Before changing the repository:
+## Execution Rules
 
 1. Inspect the current Git state and relevant files.
-2. Read [the documentation index](docs/README.md) and the documentation relevant
-   to the task.
-3. Read [.ai/README.md](.ai/README.md) and inspect `.ai/tasks/` for an active task
-   memory.
-4. When local Graphify output is available, use it as an early navigation aid
-   before repeating broad repository searches. Follow the
-   [Graphify guide](docs/tools/graphify.md).
-5. Verify important memory and Graphify claims when HEAD or relevant files have
-   changed.
+2. Follow canonical documentation in [`docs/`](docs/README.md) and existing
+   project conventions.
+3. Use the repository workflows in [`.ai/commands.md`](.ai/commands.md); do not
+   invent AI-specific alternatives.
+4. Run appropriate repository validation before considering work complete, and
+   report failures honestly.
 
-During work, keep the active task memory concise and update it after meaningful
-findings, decisions, rejected approaches, progress, or validation. Persist
-conclusions and evidence references, not internal reasoning or transcripts.
-Active task memories are local-only and must never be staged, committed, pushed,
-or included in a pull request.
+## Working Memory
 
-Graphify is optional and non-authoritative. Use it to narrow file and
-relationship discovery, then verify relevant conclusions against source code,
-configuration, tests, and canonical documentation. Missing or stale Graphify
-output must never block progress.
+- Read [`.ai/README.md`](.ai/README.md) and any relevant local memory in
+  `.ai/tasks/`.
+- Create task memory from `.ai/tasks/TEMPLATE.md` and keep it concise: record
+  conclusions, decisions, progress, meaningful rejected approaches, validation,
+  and one next action.
+- Do not store transcripts, internal reasoning, large command output, raw diffs,
+  secrets, or sensitive data.
+- Memory and optional Graphify output are non-authoritative and may be stale.
+  Verify important claims against the repository; when they conflict, the
+  repository wins.
+- Consider validation stale after relevant code, tests, configuration,
+  dependencies, or migrations change.
 
-Use repository-provided Codekeeper commands instead of inventing equivalent
-setup, development, formatting, or validation commands. Run appropriate checks
-before declaring work complete and report every failure honestly.
+## Git Safety
 
-Never store secrets or sensitive data in task memory. Never commit, push, merge,
-open pull requests, or otherwise modify remote state unless the user explicitly
-requests it.
+- Active task memories are local-only. Never stage, commit, push, or include
+  `.ai/tasks/<task>.md` in a pull request.
+- Never commit, push, merge, create a pull request, or otherwise modify remote
+  state unless explicitly requested.

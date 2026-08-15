@@ -8,6 +8,7 @@ npm run codekeeper -- setup   # Install backend and frontend dependencies
 npm run codekeeper -- dev     # Start the API and web client
 npm run codekeeper -- check   # Run tests and quality checks
 npm run codekeeper -- format  # Apply Ruff and Prettier formatting
+npm run codekeeper -- help    # Show available commands
 ```
 
 Use `check` before considering implementation complete. Use `format` only when

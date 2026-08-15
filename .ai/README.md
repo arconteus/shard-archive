@@ -1,68 +1,123 @@
 # AI Development Harness
 
-This provider-agnostic harness gives coding agents compact, persistent working
-memory. The repository owns the context; the agent is replaceable.
+> The repository owns the working context. The agent is replaceable.
+
+This provider-agnostic harness provides compact working memory and shared,
+deterministic workflows. It is an aid to development, not an AI framework.
 
 ## Authority
 
-Use this order of truth:
+Source code, configuration, tests, migrations, dependencies, canonical
+documentation, and Git state are authoritative. Local task memory is an
+optimization for continuity and may be stale. If memory contradicts the
+repository, the repository wins.
 
-1. Repository code, configuration, tests, dependencies, documentation, and Git.
-2. Long-lived project knowledge in `docs/`, `README.md`, and ADRs.
-3. Local task memory in `.ai/tasks/`.
+## Goals
 
-The repository always wins. Correct stale memory instead of trusting it.
+The harness reduces repeated exploration, preserves meaningful findings across
+context compaction and interrupted sessions, helps another compatible agent
+resume work, records important task decisions and rejected approaches, and
+exposes the same deterministic repository workflows used by humans.
 
-## Session Workflow
+## Non-Goals
 
-1. Inspect HEAD, working-tree state, and relevant files.
-2. Inspect `.ai/tasks/` and read the relevant active task memory when it exists.
-3. Consult available Graphify context before repeating broad searches.
-4. Verify memory and Graphify claims against authoritative files.
-5. Update memory after meaningful findings, decisions, progress, or validation.
-6. Run the appropriate Codekeeper validation before completion.
-7. Record one concrete next action for the next local session or agent.
+Version 0.1 does not provide agent orchestration, autonomous workflows, MCP
+infrastructure, vector databases, embeddings, RAG, semantic memory, provider
+APIs, automatic task routing, automatic commits, pushes, or pull requests, or
+AI-specific implementations of repository commands. Add none of these without
+demonstrated need from real development work.
 
-## Graphify
+## Responsibility Boundaries
 
-Use existing `graphify-out/GRAPH_REPORT.md`, `graph.json`, or Graphify queries to
-narrow discovery and reduce repeated searches. Graphify is optional,
-non-authoritative, and potentially stale. Verify implementation-relevant claims
-against the repository. Missing output must never block work. See the
-[Graphify guide](../docs/tools/graphify.md).
+- `AGENTS.md` defines global, high-priority agent behavior.
+- `.ai/README.md` defines the harness and memory protocol.
+- `.ai/commands.md` lists deterministic repository workflows.
+- `.ai/tasks/` contains temporary local working memory.
+- `docs/` contains canonical project and architecture knowledge.
 
-## Local Task Memory
+Task memory must not become a second documentation system. Promote durable
+knowledge to code, tests, documentation, an ADR, an issue, or a pull request as
+appropriate; retain only a concise reference in task memory when useful.
 
-Create one private memory per active task by copying `.ai/tasks/TEMPLATE.md` to
-a short kebab-case filename. Agents manage these Markdown files with ordinary
-file reading and editing operations; no custom memory tool is required.
+## Working Memory Protocol
 
-Persist conclusions, evidence paths, decisions, rejected approaches, progress,
-validation state, known issues, and the next action. Do not store transcripts,
-chain-of-thought, copied code, large diffs, command logs, speculation, secrets,
-credentials, sensitive customer data, or unnecessary personal data.
+A sufficiently complex active task may use one local Markdown file named
+`.ai/tasks/<kebab-case-task-name>.md`, created from `.ai/tasks/TEMPLATE.md`. It
+supports context compaction, interrupted or later sessions, agent switching, and
+avoiding expensive rediscovery.
 
-Active memories are ignored by Git. Never stage, commit, push, attach, or
-transfer them through a pull request. Only `TEMPLATE.md` is shared. Move
-team-relevant knowledge to code, tests, docs, an ADR, an issue, or the pull
-request description.
+Store conclusions and state, with evidence paths where useful. For example:
 
-## Staleness and Validation
+> `ProjectRepository` belongs to the application boundary and must not depend
+> on SQLAlchemy.
 
-Assume memory and Graphify context may be stale after changes to HEAD, relevant
-files, dependencies, configuration, or migrations. When uncertain, verify and
-rerun checks.
+Do not store conversation transcripts, chain-of-thought or other internal
+reasoning, entire command outputs, copied source, stack traces available
+elsewhere, large diffs, speculative brainstorming, or trivial discoveries.
+Never store passwords, API keys, tokens, credentials, production secrets,
+sensitive customer information, or unnecessary personal data. Prefer a concise
+conclusion plus evidence and state; consolidate memories that grow large.
 
-Record each validation result with the short HEAD SHA, clean/dirty state, and
-relevant changed paths. A pass applies only to that repository state.
+Keep `Rejected Approaches` for meaningful negative conclusions whose
+rediscovery would be costly. Do not record routine failed edits, syntax errors,
+or every discarded idea.
 
-Use the concise [repository command reference](commands.md). Open the full
-[Codekeeper guide](../docs/tools/codekeeper.md) only for details or
-troubleshooting. Report failures honestly and do not create AI-only alternatives
-to those commands.
+Active task memories are ignored by Git and must never be staged, committed,
+pushed, attached, or included in a pull request. Only `TEMPLATE.md` is shared.
 
-## Provider Compatibility
+## Validation Semantics
 
-`AGENTS.md`, this protocol, the task template, project documentation, and
-Codekeeper are canonical. Provider-specific adapters may point here but must not
-duplicate these instructions.
+A recorded `PASS` means the command passed only for the repository state
+described by `Valid for`. Validation supports `NOT RUN`, `PASS`, `FAIL`, and
+`STALE`. If relevant source code, tests, configuration, dependencies, or
+migrations change, consider the result `STALE`. When applicability is uncertain,
+rerun the check. Correctness takes priority over saving compute.
+
+Do not add Git SHA tracking, content fingerprints, validation caches, dependency
+graphs, or automatic selective test execution for v0.1. Use the
+[repository command reference](commands.md), and report failures honestly.
+
+## Recommended Workflow
+
+### Start
+
+1. Read `AGENTS.md` and inspect Git state.
+2. Read relevant canonical documentation and active task memory, when present.
+3. Verify important remembered assumptions before relying on them.
+
+### During Work
+
+1. Keep the repository authoritative.
+2. Update memory after meaningful findings, decisions, progress, or validation.
+3. Record rejected approaches only when they prevent expensive rediscovery.
+4. Keep progress resumable and mark invalidated validation `STALE`.
+
+### Completion
+
+1. Run appropriate repository validation and record the result.
+2. Resolve or report failures honestly.
+3. Update task status and one concrete next action.
+4. Promote durable knowledge to canonical documentation when necessary.
+
+## Optional Graphify Navigation
+
+Existing `graphify-out/` data or Graphify queries may narrow repository
+exploration, but Graphify is optional, non-authoritative, and potentially stale.
+Its absence must never block work, and consequential claims must be verified
+against source files. See the [Graphify guide](../docs/tools/graphify.md).
+
+## Provider Independence
+
+A compatible coding agent needs only to read repository files and instructions,
+inspect Git state, edit Markdown, and execute repository commands. The harness
+requires no particular model, provider, coding-agent product, API, or proprietary
+memory mechanism.
+
+## Design Constraint
+
+> The harness should remain boring.
+
+It consists of executable truth, canonical documentation, deterministic
+commands, and compact local working memory. New AI infrastructure requires
+evidence that this small approach is insufficient; the harness must not become
+another system developers need to maintain.

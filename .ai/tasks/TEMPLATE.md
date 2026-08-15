@@ -1,44 +1,31 @@
-# Task: <short descriptive name>
+# Task: <short-descriptive-name>
 
 ## Objective
 
-<What this task is trying to accomplish.>
+<Goal of this task>
 
 ## Status
 
 `investigating | implementing | validating | blocked | completed`
 
-## Relevant Files
+## Confirmed Findings & Decisions
 
-- `<path>` -- <why it matters>
-
-## Confirmed Findings
-
-- <Concise fact established from the repository, with a path reference.>
-
-## Decisions
-
-- <Decision and short rationale. Promote durable architectural decisions to an
-  ADR.>
+- <Fact or decision with relevant file-path reference when useful>
 
 ## Rejected Approaches
 
-- <Approach intentionally discarded and why.>
+- <Meaningful discarded approach and concise rationale>
 
 ## Progress
 
-- [ ] <Completed or remaining work>
+- [ ] <Pending or completed item>
 
 ## Validation
 
-| Check | Result | Repository state |
-| --- | --- | --- |
-| `<command>` | `PASS | FAIL | NOT RUN` | `HEAD <sha>; clean` |
-
-## Known Issues
-
-- <Issue intentionally left unresolved, or `None`.>
+- Status: `NOT RUN | PASS | FAIL | STALE`
+- Last command: `<command>`
+- Valid for: <brief human-readable description of the validated state>
 
 ## Next Action
 
-<The most useful concrete next step.>
+<Single concrete next step>
