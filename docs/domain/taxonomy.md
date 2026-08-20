@@ -2,170 +2,18 @@
 
 ## Definition
 
-A Taxonomy is a structured classification system used to organize knowledge within a World.
+A Taxonomy is an optional organizational classification system within a World. It is not a canonical knowledge primitive and must not replace Claims with ontology rules.
 
-Unlike Tags, which are free-form and user-defined, Taxonomies provide semantic meaning through predefined categories and hierarchical relationships.
+Taxonomies may classify Entities, Sources, Fragments, and Claims using a shared, optionally hierarchical vocabulary. Tags remain lightweight labels without defined semantics.
 
-Taxonomies help maintain consistency across large knowledge bases.
+## Scope and Validation
 
-## Purpose
+Users may extend taxonomies. Optional validation can suggest inconsistencies but should not block ambiguous or experimental material. A predicate vocabulary may guide structured Claims without creating a canonical Relationship type registry.
 
-The purpose of a Taxonomy is to classify Entities, Fragments, Relationships, and Sources using a shared vocabulary.
+## AI and Invariants
 
-A well-defined Taxonomy enables:
+AI may suggest classifications or taxonomy entries but cannot modify them without approval.
 
-- consistent categorization;
-- easier navigation;
-- more accurate filtering;
-- semantic validation;
-- improved AI suggestions.
-
-## Taxonomy vs Tags
-
-Tags are lightweight organizational labels.
-
-Example:
-
-- important
-- review
-- theory
-- spoiler
-
-Taxonomies describe what something is.
-
-Example:
-
-Entity Type
-
-- Character
-- Location
-- Object
-- Event
-- Organization
-
-Tags answer:
-
-> "How do I want to organize this?"
-
-Taxonomies answer:
-
-> "What is this?"
-
-## Hierarchy
-
-Taxonomies may be hierarchical.
-
-Example:
-
-Entity
-
-├── Character
-├── Location
-├── Object
-├── Organization
-└── Event
-
-Another example:
-
-Source
-
-├── Game
-│   ├── Dialogue
-│   ├── Item Description
-│   └── Cutscene
-├── Book
-├── Website
-└── Interview
-
-Hierarchies improve navigation and filtering.
-
-## Scope
-
-A Taxonomy belongs to a World.
-
-Different Worlds may define different classification systems.
-
-For example:
-
-Dark Souls
-
-Entity Types
-
-- Covenant
-- Lord Soul
-- Bonfire
-
-Original Fantasy World
-
-Entity Types
-
-- Kingdom
-- Magic School
-- Artifact
-
-The application should not enforce a universal taxonomy.
-
-## Extensibility
-
-Users should be able to create custom taxonomy entries.
-
-The system should provide sensible defaults but remain extensible.
-
-Future versions may support importing and exporting taxonomies independently.
-
-## Validation
-
-Taxonomies may be used to validate data.
-
-For example:
-
-Relationship
-
-"member_of"
-
-may require:
-
-Entity A
-
-- Character
-
-Entity B
-
-- Organization
-
-Validation rules are optional and should not prevent experimentation.
-
-## AI Behavior
-
-AI may:
-
-- suggest taxonomy entries;
-- recommend classifications;
-- detect inconsistent classifications;
-- propose new taxonomy nodes.
-
-AI must never:
-
-- modify the taxonomy automatically;
-- delete taxonomy entries;
-- reclassify objects without confirmation.
-
-## Invariants
-
-The following rules should always remain true:
-
-1. Taxonomies belong to a World.
-2. Taxonomies provide semantic meaning.
-3. Tags and Taxonomies are different concepts.
-4. Users may extend existing Taxonomies.
-5. AI suggestions require user approval.
-
-## Open Questions
-
-The following decisions remain unresolved:
-
-- Should Taxonomies support inheritance?
-- Should validation rules be configurable?
-- Should Taxonomies be exportable independently?
-- Should multiple Taxonomies classify the same object?
-- Should Projects include predefined Taxonomy templates?
+1. Taxonomy is organizational metadata, not a fifth canonical primitive.
+2. Classification does not establish truth.
+3. Taxonomy validation must preserve ambiguity and authorial control.

@@ -2,137 +2,46 @@
 
 ## Purpose
 
-Define the functional requirements for the initial versions of Shard Archive.
+Define what the initial application should do. The domain semantics in the linked domain documents govern these requirements.
 
-This document focuses on what the application should do, not how it will be implemented.
+## v0.1 MVP
 
----
+### Projects and Canonical Knowledge
 
-# MVP
+Users can create, open, rename, export, import, back up, and delete local projects. Within a project they can create, edit, find, and delete the four canonical primitives:
 
-## Project Management
+- Entities for identity;
+- Sources for provenance;
+- Fragments for prose and contextual evidence;
+- Claims for independently manageable assertions.
 
-The user can:
+Deleting material must respect evidence and dependency references rather than silently destroying context.
 
-- Create a project.
-- Open an existing project.
-- Rename a project.
-- Delete a project.
+### Mentions, Evidence, and Claims
 
----
+Users can associate Fragments and Claims with mentioned Entities without implying a semantic relationship. They can attach a Claim to supporting, contradicting, or attributing evidence from a Fragment, or directly from a Source when no Fragment exists.
 
-## Fragments
+Each Claim has a human-readable statement. Users may optionally structure a Claim with subject, predicate, and object; add perspective and temporal context; and distinguish assertion mode from truth assessment. Complex and n-ary Claims need not be forced into triples.
 
-The user can:
+### Graph and Search
 
-- Create fragments.
-- Edit fragments.
-- Delete fragments.
-- Search fragments.
-- Tag fragments.
-- Mark fragment confidence.
+Users can perform text search over canonical knowledge and explore a graph projected from structured Claims. They can expand, search, and filter projected nodes and edges. Rebuilding or deleting the graph or search index must not delete canonical knowledge.
 
----
+### Authority Boundaries
 
-## Entities
+Normal authoring creates Fragments directly. Constructor workflows make explicit canonical mutations. Sandbox workflows search, compare, traverse, and infer without implicit canonical side effects.
 
-The user can:
+## Future Versions
 
-- Create entities.
-- Merge duplicated entities.
-- Assign entity types.
-- Attach fragments to entities.
+Optional AI providers may support entity extraction, claim and structure suggestions, semantic retrieval, contradiction candidates, and summaries. Embeddings, vector indexes, similarity data, semantic clusters, AI summaries, and RAG context remain derived and rebuildable. AI proposals require explicit validation and user acceptance.
 
----
+Collaboration, synchronization, plugins, richer history, and additional importers may be evaluated later.
 
-## Relationships
+## Out of Scope for v0.1
 
-The user can:
-
-- Create typed relationships.
-- Edit relationships.
-- Delete relationships.
-- Navigate relationships.
-
----
-
-## Sources
-
-The user can:
-
-- Register information sources.
-- Link fragments to sources.
-- Record citations.
-- Store external references.
-
----
-
-## Graph
-
-The user can:
-
-- Visualize the knowledge graph.
-- Expand neighboring nodes.
-- Filter nodes.
-- Filter relationships.
-- Search within the graph.
-
----
-
-## Search
-
-The user can:
-
-- Perform text search.
-- Filter by entity type.
-- Filter by tags.
-- Filter by confidence.
-- Filter by source.
-
----
-
-## Import / Export
-
-The user can:
-
-- Export a project.
-- Import a project.
-- Backup a project.
-
----
-
-# Future Versions
-
-## Local AI
-
-- Entity extraction
-- Relationship suggestions
-- Semantic search
-- Similar fragment detection
-- Summaries
-
-## Collaboration
-
-- Shared projects
-- Synchronization
-- Version history
-
-## Plugins
-
-- Importers
-- Exporters
-- AI providers
-- Custom graph layouts
-
----
-
-# Out of Scope
-
-The first version will not include:
-
-- Cloud accounts
-- Real-time collaboration
-- Online synchronization
-- Story generation
-- Public project hosting
-- Mobile application
+- Graph databases or a canonical Relationship table
+- Event Sourcing or immutable Fragments
+- Timeline, Event, Fact, Belief, or Axiom primitives
+- Cloud accounts, online synchronization, and real-time collaboration
+- Autonomous AI knowledge creation
+- A large or frozen epistemic ontology

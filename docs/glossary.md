@@ -1,268 +1,81 @@
 # Shard Archive — Glossary
 
-## Purpose
+## Canonical Knowledge
 
-This glossary defines the ubiquitous language used throughout the Shard Archive project.
+The persistent semantic core: Entity, Source, Fragment, and Claim. Organizational objects and derived representations are not additional canonical primitives.
 
-All documentation, source code, API endpoints, and discussions should use these terms consistently.
+## Knowledge Engine
 
----
+The domain and application capability that manages canonical narrative knowledge, validates proposed changes, and produces derived views.
 
-# World
+## Entity
 
-A self-contained knowledge space.
+A stable identity for a referent or concept the archive must distinguish. It does not contain facts about itself or imply that its referent objectively exists.
 
-A world represents the narrative universe being documented.
+## Source
 
-Examples:
+The provenance container from which information originated. A Source may be authentic, forged, reliable, or misleading; it does not determine truth. Its author is a separate Entity reference where applicable.
 
-- Dark Souls
-- Elden Ring
-- Original novel
-- D&D campaign
+## Fragment
 
-A project contains one world.
+A stable, mutable, human-oriented unit of prose and contextual evidence. A Fragment preserves wording, voice, tone, and ambiguity; it is not the unit of semantic assertion.
 
----
+## Claim
 
-# Project
+The smallest assertion whose meaning, provenance, context, or validity the archive needs to manage independently. A Claim is not necessarily a Fact and always has a human-readable statement.
 
-The local workspace managed by the application.
+## Fact
 
-A project stores:
+A statement treated as true under some authority or assessment. Claim is the domain primitive because rumors, lies, hypotheses, and disputed assertions must remain representable without being called facts.
 
-- world data
-- fragments
-- entities
-- relationships
-- settings
-- AI indexes
-- metadata
+## Structured Claim
 
----
+A Claim with an optional subject, predicate, and object representation in addition to its statement. Not every Claim can or should be structured as a triple.
 
-# Fragment
+## Evidence
 
-The smallest unit of knowledge.
+An association from a Claim to a supporting, contradicting, or attributing Fragment, or directly to a Source when no Fragment exists. Evidence is a supporting structure, not a canonical primitive.
 
-A fragment is an isolated piece of information before it is fully connected to the rest of the archive.
+## Entity Mention
 
-Examples:
+An association indicating that a Fragment or Claim references an Entity. A mention supports navigation and retrieval but does not imply a semantic relationship.
 
-- an item description
-- a dialogue line
-- a paragraph
-- an observation
-- a quote
-- an idea
+## Provenance
 
-A fragment may reference multiple entities.
+The trace of where information came from, normally Source → Fragment → Claim. Provenance establishes origin, not truth.
 
----
+## Perspective
 
-# Entity
+The contextual viewpoint from which a Claim is made or assessed, optionally referencing an Entity. Perspective does not determine truth.
 
-A real or conceptual object within a world.
+## Relationship
 
-Examples:
+A semantic connection represented by a structured Claim. Relationship is not a canonical record; when graphable, it produces a derived Graph Edge.
 
-- Character
-- Location
-- Event
-- Item
-- Organization
-- Concept
-- Creature
+## Graph Edge
 
-Entities exist independently of fragments.
+A directional connection in a Graph Projection, commonly generated from the structured form of a Claim. It can be rebuilt and does not duplicate canonical knowledge.
 
-Fragments describe entities.
+## Graph Projection
 
----
+The partial, rebuildable graph generated from Claims that can be meaningfully structured. Unstructured Claims remain first-class knowledge outside the graph.
 
-# Relationship
+## Derived Data
 
-A typed connection between two entities.
+Rebuildable state such as graph projections, search indexes, embeddings, vector indexes, similarity scores, semantic clusters, AI summaries, and RAG context. Its loss must not destroy canonical knowledge.
 
-Examples:
+## Assertion Mode and Truth Assessment
 
-- located_in
-- member_of
-- owns
-- created_by
-- enemy_of
-- part_of
-- inspired_by
+Separate, provisional dimensions of Claim context. Assertion mode may describe asserted, reported, rumored, believed, or hypothesized speech; truth assessment may describe unknown, supported, disputed, or false content.
 
-Relationships may also contain metadata.
+## Project, World, and Taxonomy
 
----
+Project is the local workspace and World scopes a narrative universe. Taxonomy supplies optional structured classification. These are application or organizational concepts, not canonical knowledge primitives.
 
-# Source
+## Local AI
 
-The origin of a fragment.
+An optional local model accessed through a provider boundary. AI suggestions are temporary until explicitly accepted; canonical knowledge remains usable without AI.
 
-Examples:
+## Embedding and Semantic Search
 
-- Book
-- Chapter
-- Game
-- NPC dialogue
-- Item description
-- Interview
-- Wiki
-- User note
-
-Sources provide provenance.
-
----
-
-# Claim (Planned Concept)
-
-A working term for a statement extracted from one or more fragments.
-
-Claims are not necessarily true.
-
-They may represent information asserted by a source, but whether a Claim should
-be a first-class domain object remains unresolved.
-
----
-
-# Evidence (Planned Concept)
-
-A working term for information supporting or contradicting a claim or
-relationship.
-
-Current documentation traces support back to one or more Fragments. Whether
-Evidence needs its own identity and lifecycle remains unresolved.
-
----
-
-# Canon
-
-Information accepted as official within a narrative universe.
-
-Canon depends on the selected world.
-
-Shard Archive does not define canon automatically.
-
----
-
-# Interpretation (Planned Concept)
-
-A working term for a user-generated conclusion based on supporting material.
-
-Interpretations should remain distinguishable from source material.
-
-The domain model must still decide whether Claims, Evidence, and Interpretations
-are first-class objects or projections over other knowledge objects.
-
----
-
-# Tag
-
-A lightweight label used for organization.
-
-Tags are user-defined.
-
-They have no semantic meaning beyond organization.
-
----
-
-# Taxonomy
-
-The structured classification system used by a project.
-
-Unlike tags, taxonomies have defined meaning and hierarchy.
-
----
-
-# Confidence
-
-The estimated reliability of a fragment or claim.
-
-Possible values include:
-
-- Confirmed
-- Probable
-- Possible
-- Speculative
-- Disputed
-- Unknown
-
----
-
-# Knowledge Graph
-
-The complete network of entities, relationships, fragments, and sources.
-
-The graph is the primary representation of knowledge inside Shard Archive.
-
----
-
-# Local AI
-
-An AI model executed on the user's own hardware.
-
-Examples:
-
-- Ollama
-- llama.cpp
-- vLLM
-
-Local AI assists the user but never becomes the source of truth.
-
----
-
-# Embedding
-
-A numerical representation of text used for semantic search.
-
-Embeddings allow similar concepts to be discovered even when different words are used.
-
----
-
-# Semantic Search
-
-A search mechanism based on meaning rather than exact text matching.
-
-Semantic search complements traditional keyword search.
-
----
-
-# Workspace
-
-The current editing session of the user.
-
-A workspace includes:
-
-- opened project
-- current graph state
-- filters
-- selections
-- layout preferences
-
----
-
-# Metadata
-
-Information describing another object.
-
-Examples:
-
-- creation date
-- author
-- confidence
-- source
-- tags
-- timestamps
-
-Metadata does not represent narrative knowledge itself.
-
----
-
-# Ubiquitous Language
-
-The shared vocabulary used throughout the project.
-
-Whenever possible, code, documentation, APIs, and user interface should use the terminology defined in this glossary.
+An Embedding is a derived numerical representation used by Semantic Search to retrieve related meaning. Both complement canonical data and keyword search rather than replacing them.

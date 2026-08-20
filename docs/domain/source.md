@@ -2,182 +2,22 @@
 
 ## Definition
 
-A Source represents the origin of narrative information.
+A Source represents provenance and answers “Where did this information come from?” It does not answer whether the information is true.
 
-Sources preserve provenance by identifying where a Fragment originated.
+Examples include journals, reports, archives, author notes, manuscripts, transcripts, and external research. An authentic Source may contain lies; a forged Source may remain historically important.
 
-A Source is not knowledge itself.
+## Authorship and Fragments
 
-Instead, it provides the context necessary to evaluate the reliability, meaning, and interpretation of one or more Fragments.
+Author and Source are separate. Hannah is an Entity; *Hannah's Journal* is a Source whose author may reference Hannah. A Source may provide one or more Fragments, which preserve selected prose and citation context.
 
-## Purpose
+## Evidence
 
-The purpose of a Source is to answer a simple question:
+Evidence normally reaches a Claim through a Fragment, allowing its Source to be discovered transitively. Direct Source evidence is allowed only when no Fragment exists; one evidence association must not redundantly select both.
 
-> Where did this information come from?
+## AI and Invariants
 
-Every Fragment may reference one or more Sources.
+AI may suggest metadata, duplicates, citations, or classifications, but may not invent provenance or replace source material.
 
-Preserving provenance allows users to distinguish:
-
-- original evidence;
-- later interpretations;
-- user notes;
-- AI-generated suggestions.
-
-## Examples
-
-Examples of Sources include:
-
-- Item descriptions
-- NPC dialogue
-- Books
-- Codex entries
-- Developer interviews
-- Official websites
-- Cutscenes
-- User observations
-- Imported documents
-- Images
-- Videos
-- Academic papers
-
-A Source represents the container of information rather than the information itself.
-
-## Source Types
-
-Possible source types include:
-
-- Game
-- Book
-- Dialogue
-- Item
-- Document
-- Interview
-- Website
-- Video
-- Audio
-- Image
-- User Note
-- AI Suggestion
-
-Projects may define additional source types.
-
-## Fragments
-
-A Source may contain multiple Fragments.
-
-For example:
-
-Source:
-
-Item Description — Soul of a Great Hero
-
-Fragments:
-
-- Use to acquire many souls.
-- The soul belonged to a great hero.
-
-The archive separates the physical source from the individual pieces of knowledge extracted from it.
-
-## Metadata
-
-A Source may contain metadata such as:
-
-- title
-- author
-- publisher
-- game
-- chapter
-- location
-- edition
-- language
-- publication date
-- URL
-- ISBN
-- notes
-
-Metadata should describe the Source rather than the extracted knowledge.
-
-## Provenance
-
-A Source provides provenance.
-
-Users should always be able to trace supporting information without requiring a
-specific Evidence object:
-
-Relationship
-
-↓ supported by
-
-Fragment
-
-↓
-
-Source
-
-This chain should remain intact throughout the lifetime of the project. Whether
-Evidence becomes a first-class domain object is an unresolved domain decision.
-
-## Reliability
-
-Sources may have different levels of reliability.
-
-Examples:
-
-- Official publication
-- Primary source
-- Secondary source
-- User observation
-- Community interpretation
-- AI-generated content
-
-Reliability should remain configurable by the user.
-
-## Canon
-
-A Source does not determine canon.
-
-For example:
-
-A developer interview may contradict the released game.
-
-Both should remain available.
-
-Canon decisions belong to the project rather than to the Source.
-
-## AI Behavior
-
-AI may:
-
-- extract metadata;
-- identify duplicated Sources;
-- suggest citations;
-- classify source types.
-
-AI must never:
-
-- invent provenance;
-- fabricate citations;
-- rewrite source material;
-- replace the original source.
-
-## Invariants
-
-The following rules should always remain true:
-
-1. A Source represents where information originated.
-2. A Source may contain many Fragments.
-3. Fragments preserve their connection to Sources.
-4. Sources are independent from Entities.
-5. AI-generated content is itself a Source type, not evidence.
-
-## Open Questions
-
-The following decisions remain unresolved:
-
-- Should Sources support file attachments?
-- Should Sources support page-level citations?
-- Should Sources be versioned?
-- Should multiple Fragments share citation ranges?
-- How should imported PDFs preserve pagination?
+1. Source is one of four canonical primitives.
+2. Source records provenance, not truth, canon, or authorial acceptance.
+3. Source and author remain conceptually separate.

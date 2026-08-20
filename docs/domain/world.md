@@ -2,143 +2,19 @@
 
 ## Definition
 
-A World is the highest-level knowledge container in Shard Archive.
+A World is an application-level boundary that scopes one narrative universe within a Project. It is not an additional canonical knowledge primitive.
 
-It defines the narrative universe in which all Entities, Fragments, Relationships, Sources, and other knowledge objects exist.
+A World contains the canonical Entity, Source, Fragment, and Claim records for its scope, plus organizational settings and derived views. Objects do not implicitly cross World boundaries.
 
-A World establishes the boundaries of consistency, canon, and interpretation.
+## Authority and Portability
 
-## Purpose
+World-level policy may help users express editorial acceptance, but it must not collapse assertion mode and in-world truth into one canon flag. Retcons preserve historical evidence.
 
-The purpose of a World is to isolate knowledge.
-
-Different narrative universes should never interfere with one another.
-
-Examples include:
-
-- Dark Souls
-- Elden Ring
-- Bloodborne
-- An original novel
-- A tabletop RPG campaign
-- A fictional universe created by the user
-
-Each World represents its own knowledge graph.
-
-## Scope
-
-A World owns:
-
-- Entities
-- Fragments
-- Relationships
-- Sources
-- Taxonomies
-- Timeline
-- Canon definitions
-- User settings
-
-Objects should never belong to multiple Worlds.
-
-If information is shared, it should be duplicated or explicitly imported.
-
-## Identity
-
-Every World has a unique identity.
-
-Typical metadata includes:
-
-- Name
-- Description
-- Author
-- Version
-- Creation date
-- Last modified date
-
-Additional metadata may be added in future versions.
-
-## Canon
-
-Canon is defined at the World level.
-
-Different Worlds may interpret the same source differently.
-
-For example:
-
-World A may consider:
-
-- Developer interviews as canon.
-
-World B may consider:
-
-- Only released game content as canon.
-
-The application should not enforce a universal definition of canon.
-
-## Independence
-
-Worlds are completely independent.
-
-Deleting one World must never affect another.
-
-Relationships cannot cross World boundaries.
-
-Entities cannot belong to multiple Worlds.
-
-## Import and Export
-
-A World should be exportable as a self-contained package.
-
-An exported World should contain:
-
-- Entities
-- Fragments
-- Relationships
-- Sources
-- Metadata
-- Settings
-
-The goal is long-term portability.
-
-## AI Behavior
-
-AI operates within the context of the currently opened World.
-
-It must never:
-
-- use information from another World without permission;
-- merge Worlds automatically;
-- assume shared canon between Worlds.
-
-## Future Extensions
-
-Future versions may support:
-
-- World templates
-- Shared taxonomies
-- Read-only reference Worlds
-- World inheritance
-- Cross-world comparison
-
-These capabilities are outside the scope of the MVP.
+A World can be exported as a self-contained package whose canonical knowledge remains useful without graph indexes, embeddings, or AI artifacts.
 
 ## Invariants
 
-The following rules should always remain true:
-
-1. Every Project contains exactly one World.
-2. Every Entity belongs to one World.
-3. Every Fragment belongs to one World.
-4. Every Relationship belongs to one World.
-5. Relationships cannot connect Entities from different Worlds.
-6. Canon is defined within a World.
-7. AI reasoning is scoped to the active World.
-
-## Open Questions
-
-The following decisions remain unresolved:
-
-- Should Worlds support multiple timelines?
-- Should Worlds have configurable ontology rules?
-- Should reference Worlds be read-only?
-- Should users be able to fork an existing World?
+1. Each Project currently scopes one World.
+2. Canonical records belong to one World.
+3. Derived projections can be rebuilt from that World's canonical records.
+4. AI and Sandbox operations remain scoped and have no implicit cross-World effects.
