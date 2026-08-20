@@ -2,247 +2,59 @@
 
 ## Purpose
 
-This document describes the high-level architecture of Shard Archive.
+Shard Archive is a local-first narrative knowledge engine. The v0.1 architecture is provisionally stable for implementation and separates canonical knowledge from derived representations and infrastructure.
 
-Rather than focusing on implementation details, it explains how the major components of the system collaborate to transform narrative information into structured knowledge.
+## High-Level Architecture
 
-The architecture follows a layered design centered around the Knowledge Engine.
-
----
-
-# High-Level Architecture
-
-```
-                    +----------------------+
-                    |      Web Client      |
-                    |    Vue + TypeScript  |
-                    +----------+-----------+
-                               |
-                           HTTP / WebSocket
-                               |
-+--------------------------------------------------------------+
-|                     FastAPI Application                      |
-|                                                              |
-|  REST API                                                    |
-|                                                              |
-|  Application Layer                                           |
-|                                                              |
-|  Knowledge Engine                                            |
-|                                                              |
-|  AI Integration                                              |
-|                                                              |
-|  Import / Export                                             |
-+--------------------------+-----------------------------------+
-                           |
-                    Repository Layer
-                           |
-                    SQLite Database
-                           |
-                  Embedding Storage
-                           |
-                 Local AI (Ollama)
+```mermaid
+flowchart TB
+    UI[Vue web client] --> API[FastAPI adapter]
+    API --> APP[Application use cases]
+    APP --> KE[Knowledge Engine]
+    KE --> CORE[Entity · Source · Fragment · Claim]
+    KE --> PORTS[Repository and provider interfaces]
+    PORTS --> SQL[(SQLite adapter)]
+    KE --> DERIVED[Graph · Search · Embeddings · RAG]
+    AI[Optional AI adapters] -. proposals .-> KE
 ```
 
----
+## Canonical Domain
 
-# Design Principles
+Entity represents identity, Source represents provenance, Fragment represents authorial prose and context, and Claim represents an independently manageable assertion. No graph edge, index, model output, or infrastructure object is canonical knowledge.
 
-The architecture follows these principles:
+World, Project, Taxonomy, Constructor, and Sandbox remain useful organizational, application, or UX concepts rather than additional canonical primitives.
 
-- Local First
-- Separation of Concerns
-- Explicit Domain Model
-- AI as Assistance
-- Technology Independence
-- Progressive Complexity
+## Layers and Dependency Direction
 
-Every component should have a single responsibility.
+- UI and API adapters translate user and HTTP interactions.
+- Application services coordinate use cases such as create Fragment, accept Claim, attach evidence, merge Entity, search, and explore.
+- The Knowledge Engine enforces domain rules, provenance, authority boundaries, and projection policies.
+- Repository and provider interfaces belong to inner layers; SQLite, files, search engines, and AI providers implement those interfaces.
 
----
+Source-code dependencies point inward. Domain and application code must not depend directly on FastAPI, SQLite, Ollama, a vector database, or another concrete provider.
 
-# Layers
+## Knowledge Flow
 
-## User Interface
-
-Responsible for:
-
-- rendering data;
-- user interaction;
-- graph visualization;
-- forms;
-- navigation.
-
-The UI never contains business rules.
-
----
-
-## API Layer
-
-Responsible for:
-
-- exposing REST endpoints;
-- validating requests;
-- authentication (future);
-- serialization.
-
-The API translates HTTP requests into application use cases.
-
----
-
-## Application Layer
-
-Coordinates use cases.
-
-Examples:
-
-- Create Fragment
-- Merge Entities
-- Create Relationship
-- Import Source
-
-Application services orchestrate the domain but do not implement domain rules.
-
----
-
-## Knowledge Engine
-
-The Knowledge Engine contains the core business logic.
-
-It is responsible for:
-
-- entity resolution;
-- relationship resolution;
-- graph consistency;
-- provenance;
-- semantic coordination.
-
-The engine represents the heart of Shard Archive.
-
----
-
-## Repository Layer
-
-Repository interfaces abstract persistence. These interfaces belong to an inner
-domain or application layer and describe only the operations that layer needs.
-Infrastructure supplies concrete implementations.
-
-The Knowledge Engine should not know whether data is stored in:
-
-- SQLite
-- PostgreSQL
-- Neo4j
-- memory
-- JSON
-
-Persistence is an implementation detail.
-
----
-
-## Infrastructure
-
-Infrastructure provides:
-
-- database access;
-- local file storage;
-- embedding storage;
-- AI providers;
-- importers;
-- exporters.
-
-Infrastructure depends on the domain.
-
-The domain never depends on infrastructure.
-
----
-
-# Dependency Direction
-
-Source-code dependencies always point inward. Outer adapters depend on the
-application and domain abstractions; the inner layers never import concrete
-adapters.
-
-```text
-UI / FastAPI adapters ───────────────┐
-Persistence / AI adapters ──────────┼──> Application / Knowledge Engine
-                                    │              │
-                                    └──────────────┴──> Required interfaces
+```mermaid
+flowchart LR
+    U[Authorial input] --> F[Fragment]
+    S[Source] --> F
+    F -->|evidence| C[Claim]
+    C --> E[Entity references]
+    C --> G[Graph projection]
+    C --> X[Search and semantic views]
 ```
 
-At runtime, an application use case may call a repository interface and reach an
-infrastructure implementation through dependency injection. That runtime call
-does not reverse the source-code dependency: infrastructure implements the
-inner interface and depends on its contract.
+Fragments have stable identity and mutable content. AI may suggest segmentation during imports, but normal authoring does not require AI segmentation before a Fragment exists.
 
-The domain and application layers must not import SQLite, SQLAlchemy, FastAPI,
-Ollama, or any other concrete infrastructure technology. Infrastructure must
-never contain business rules.
+## Derived Systems
 
----
+Graph projections, full-text indexes, embeddings, vector indexes, similarity scores, semantic clusters, summaries, and RAG context are partial or computed views. They may be destroyed and rebuilt without loss of canonical knowledge.
 
-# Artificial Intelligence
+SQLite remains planned canonical persistence, but repository abstractions prevent SQLite-specific behavior from defining the domain. Neo4j, microservices, event sourcing, and cloud infrastructure are not part of v0.1.
 
-AI is an infrastructure component.
+## AI and UX Boundaries
 
-It provides capabilities such as:
+AI providers may extract entities, suggest Claims or structure, summarize, retrieve, and embed. AI proposes; the Knowledge Engine validates; the user retains authority.
 
-- entity extraction;
-- summarization;
-- semantic search;
-- relationship suggestions.
-
-The Knowledge Engine decides whether AI output becomes part of the archive.
-
-AI never modifies the archive directly.
-
----
-
-# Knowledge Flow
-
-```
-Source
-      ↓
-Fragment
-      ↓
-Knowledge Engine
-      ↓
-Entity Resolution
-      ↓
-Relationship Resolution
-      ↓
-Knowledge Graph
-      ↓
-Search
-      ↓
-User
-```
-
----
-
-# Extensibility
-
-The architecture should support future modules without modifying the core engine.
-
-Examples:
-
-- timeline analysis;
-- contradiction detection;
-- plugin system;
-- multiple AI providers;
-- collaborative editing.
-
-New functionality should integrate through well-defined interfaces.
-
----
-
-# Non-Goals
-
-The architecture does not prioritize:
-
-- cloud-native deployment;
-- microservices;
-- distributed databases;
-- real-time collaboration.
-
-These may be added later if justified.
-
-The initial architecture favors simplicity, maintainability, and local execution.
+Constructor workflows perform intentional mutations. Sandbox workflows search, traverse, compare, simulate, or infer without implicit canonical side effects. Promotion from Sandbox requires an explicit Constructor approval flow.

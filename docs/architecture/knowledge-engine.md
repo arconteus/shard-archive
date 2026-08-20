@@ -1,179 +1,42 @@
 # Knowledge Engine
 
-## Purpose
+## Responsibility
 
-The Knowledge Engine is the core of Shard Archive.
+The Knowledge Engine manages canonical narrative knowledge while preserving prose, provenance, ambiguity, and conflicting perspectives. It is independent of the UI, storage implementation, indexes, and AI providers.
 
-Its responsibility is to transform isolated pieces of information into an interconnected and explorable knowledge graph while preserving provenance, uncertainty, and context.
-
-The engine is independent from the user interface, storage implementation, and AI providers.
-
-## Core Principle
-
-Knowledge does not enter the archive fully structured.
-
-Instead, it evolves progressively.
-
-The archive should preserve every stage of that evolution.
-
-## Knowledge Flow
-
-One current, illustrative flow begins with Sources.
-
-Sources produce Fragments.
-
-Fragments describe Entities.
-
-Entities are connected through Relationships.
-
-The resulting graph becomes searchable, explorable, and analyzable. This flow is
-not a finalized domain model: Claims, Evidence, and Interpretations may become
-first-class objects or remain derived concepts.
+## Canonical Core
 
 ```text
-Source
-    ↓
-Fragment
-    ↓
-Entity Detection
-    ↓
-Entity
-    ↓
-Relationship
-    ↓
-Knowledge Graph
+Entity   identity
+Source   provenance
+Fragment authorial prose and context
+Claim    independently manageable assertion
 ```
 
-## Sources
+These four primitives are persistent semantic state. Source is not truth, Fragment is not Claim, Claim is not Fact, Entity is not knowledge, Graph is not canonical state, and AI suggestion is not knowledge.
 
-Sources represent the origin of information.
+## Claims and Evidence
 
-The engine never treats a Source as knowledge.
+Every Claim has a statement. It may also have optional subject/predicate/object structure, referenced Entities, perspective, validity interval, assertion mode, and truth assessment. Those fields remain subject to implementation feedback.
 
-Instead, Sources provide provenance.
+Evidence normally follows Source → Fragment → Claim. A Claim evidence reference selects either a Fragment or, when no Fragment exists, a Source. Initial relations should remain small: supports, contradicts, and attributes.
 
-## Fragments
+Attribution does not validate content. “Hannah stated X” and “X” are independently manageable Claims. Derived Claims may reference other Claims as dependencies, including accepted inferences; an AI inference remains temporary until accepted.
 
-Fragments are the raw material of the archive.
+## Graph and Search
 
-Fragments are immutable representations of captured information.
+Structured Claims may project graph edges. Complex and n-ary Claims can remain statement-only. The graph is therefore intentionally incomplete, partial, and rebuildable. Unstructured Claims still participate in full-text and semantic search, RAG, evidence navigation, and inference.
 
-Everything begins as a Fragment.
+## Epistemic and Temporal Context
 
-## Entity Resolution
+Assertion mode and truth assessment remain separate provisional dimensions. Source publication time and Claim validity time are also distinct. Retcons preserve historical Sources and Fragments while allowing newer Claims or policy to express the current interpretation.
 
-Fragments may mention one or more Entities.
-
-The engine is responsible for resolving whether:
-
-- the Entity already exists;
-- a new Entity should be suggested;
-- the reference is ambiguous.
-
-Entity creation always requires user confirmation.
-
-## Relationship Resolution
-
-Relationships are derived from knowledge rather than manually embedded inside Fragments.
-
-Multiple Fragments may support the same Relationship.
-
-Relationships may exist with varying confidence.
-
-## Evidence
-
-Every Relationship may reference one or more supporting Fragments.
-
-Every Fragment may reference one or more Sources.
-
-This creates a traceable provenance chain without deciding whether Evidence is
-a separate domain object.
-
-```text
-Relationship
-      ↓ supported by
-Fragment
-      ↓
-Source
-```
-
-## Open Domain Questions
-
-Claims, Evidence, and Interpretations are working concepts rather than finalized
-domain objects. A future domain decision must determine whether Claims and
-Evidence should be first-class objects with their own identity and lifecycle, or
-whether they should remain relationships or projections over Fragments. That
-decision must also clarify how Interpretations reference their supporting
-material.
-
-## Knowledge Graph
-
-The graph is not the source of truth.
-
-It is a projection of the underlying knowledge.
-
-Different graph visualizations may represent the same knowledge differently.
-
-## Search
-
-The engine supports multiple search strategies.
-
-Examples include:
-
-- keyword search;
-- semantic search;
-- graph traversal;
-- relationship exploration;
-- source lookup.
-
-These strategies should produce consistent results over the same underlying knowledge.
+No Event, Timeline, Belief, Fact, Axiom, or Relationship primitive is required for these cases in v0.1.
 
 ## Artificial Intelligence
 
-AI assists the engine.
+AI is optional infrastructure behind provider abstractions. It may suggest entity extraction or resolution, Claims, Claim structure, summaries, embeddings, and retrieval context. It never creates canonical knowledge directly or makes core features unavailable when no model is installed.
 
-It never replaces it.
+## Persistence Direction
 
-AI may suggest:
-
-- entities;
-- relationships;
-- classifications;
-- summaries.
-
-The engine decides nothing automatically.
-
-User confirmation is always required before modifying the archive.
-
-## Future Capabilities
-
-The engine should be designed so future modules can be added without changing the domain model.
-
-Examples:
-
-- timeline reasoning;
-- contradiction detection;
-- ontology validation;
-- temporal queries;
-- plugin-based analyzers;
-- multiple AI providers.
-
-## Responsibilities
-
-The Knowledge Engine is responsible for:
-
-- preserving provenance;
-- preserving uncertainty;
-- maintaining consistency;
-- exposing the knowledge graph;
-- supporting semantic search;
-- coordinating AI suggestions.
-
-The Knowledge Engine is not responsible for:
-
-- rendering the UI;
-- storing files directly;
-- communicating with external AI services;
-- importing specific file formats.
-
-Those responsibilities belong to other components.
+Future persistence is expected to center approximately on entities, sources, fragments, claims, mention associations, claim evidence, and claim dependencies. This direction is not a frozen SQL schema. Repositories expose domain needs; SQLite implements them without defining the domain.

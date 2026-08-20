@@ -52,7 +52,7 @@ Examples include:
 
 - Fragment Editor
 - Entity Inspector
-- Relationship Panel
+- Claim and Evidence Panel
 - Graph View
 - Search Panel
 - Timeline View

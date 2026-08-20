@@ -10,17 +10,17 @@ Accepted
 
 ## Context
 
-Shard Archive is not a traditional CRUD application.
-
-Its primary responsibility is to manage, analyze, and enrich narrative knowledge through graph-based structures, semantic search, and local AI integration.
+Shard Archive is not a traditional CRUD application. Its backend manages a
+narrative knowledge engine whose canonical domain remains independent of graph,
+search, and optional AI infrastructure.
 
 The backend must support:
 
 - complex domain logic;
-- local AI inference;
+- optional local AI inference;
 - embedding generation;
 - semantic search;
-- knowledge graph operations;
+- graph projection and traversal;
 - future plugin support.
 
 The backend should also remain easy to understand and contribute to.
@@ -31,7 +31,7 @@ The backend will be implemented using Python and FastAPI.
 
 FastAPI will expose the application's public API.
 
-Python will serve as the primary language for the Knowledge Engine and AI integration.
+Python will serve as the primary language for the Knowledge Engine and optional AI adapters.
 
 ## Rationale
 
@@ -123,7 +123,7 @@ Cons
 - Slower experimentation with AI tooling.
 - Less direct integration with modern ML libraries.
 
-Rejected because AI integration is a primary concern.
+Rejected because Python provides the most direct path to the planned optional AI capabilities without adding a second backend service.
 
 ---
 
@@ -157,7 +157,7 @@ Cons
 - Limited AI ecosystem.
 - Smaller selection of mature NLP libraries.
 
-Rejected because AI capabilities outweigh raw performance requirements.
+Rejected because Python best fits the combined domain-processing and optional AI ecosystem; raw performance is not currently the limiting requirement.
 
 ## Consequences
 
@@ -165,7 +165,7 @@ Rejected because AI capabilities outweigh raw performance requirements.
 
 - Excellent AI ecosystem.
 - Clean REST architecture.
-- Easy integration with Ollama.
+- Easy integration with optional providers such as Ollama.
 - Rich data-processing libraries.
 - Strong long-term maintainability.
 

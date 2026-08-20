@@ -1,114 +1,54 @@
 # Shard Archive — Roadmap
 
-## Philosophy
+Versions are meaningful product milestones rather than deadlines. Implementation evidence may move features between releases.
 
-The roadmap describes the planned evolution of Shard Archive.
+## v0.1 — Canonical Core
 
-Versions represent meaningful product milestones rather than deadlines.
+Objective: establish local projects and canonical narrative knowledge before advanced projections.
 
-Features may move between releases as the project evolves.
+- Entity, Source, Fragment, and Claim management
+- Entity mentions and Claim evidence
+- Human-readable Claims with optional structured form
+- Basic assertion mode, truth assessment, perspective, and temporal context
+- Text search and import/export
+- SQLite persistence behind repository abstractions
 
----
+## v0.2 — Graph and Search Projections
 
-# v0.1 — MVP
+Objective: improve exploration using rebuildable views over canonical knowledge.
 
-Objective:
+- Graph projection from structured Claims
+- Visualization, filtering, and graph traversal
+- Claim and evidence exploration
+- Entity resolution and merging
+- Improved taxonomy and search
+- Saved layouts as derived user-interface state
 
-Build the minimum application capable of storing and exploring narrative knowledge.
+## v0.3 — Optional AI Assistance
 
-Features:
+Objective: assist organization without granting AI canonical authority.
 
-- Local project management
-- Fragment management
-- Entity management
-- Typed relationships
-- Source management
-- Basic graph visualization
-- Text search
-- Import / Export
-- SQLite persistence
+- Provider abstraction, with Ollama as one possible adapter
+- Entity extraction and resolution suggestions
+- Claim and structured-claim suggestions
+- Embeddings, semantic retrieval, and similar-fragment discovery
+- Summaries and contradiction candidates
+- Explicit Constructor approval for promoted suggestions
 
----
+## v0.4 — Productivity
 
-# v0.2 — Knowledge Graph
-
-Objective:
-
-Improve navigation and understanding of complex narrative worlds.
-
-Features:
-
-- Advanced graph visualization
-- Graph filtering
-- Relationship explorer
-- Entity merging
-- Better taxonomy
-- Timeline support
-- Saved graph layouts
-
----
-
-# v0.3 — Local AI
-
-Objective:
-
-Use local AI to assist knowledge organization.
-
-Features:
-
-- Ollama integration
-- Embedding generation
-- Semantic search
-- Entity extraction
-- Relationship suggestions
-- Similar fragment detection
-- AI-assisted summaries
-
----
-
-# v0.4 — Productivity
-
-Objective:
-
-Improve usability for large projects.
-
-Features:
-
-- Advanced filters
-- Bulk editing
-- Better importers
-- Keyboard shortcuts
-- Command palette
+- Advanced filters and bulk editing
+- Better importers and evidence workflows
+- Keyboard shortcuts and command palette
 - Performance improvements
 
----
+## v1.0 — Stable
 
-# v1.0 — Stable
+- Stable API and domain contracts
+- Complete documentation and reliable import/export
+- Robust testing and production-ready local architecture
+- Plugin-ready boundaries
 
-Objective:
+## Future Ideas
 
-First stable public release.
-
-Goals:
-
-- Stable API
-- Complete documentation
-- Reliable import/export
-- Robust testing
-- Production-ready architecture
-- Plugin-ready design
-
----
-
-# Future Ideas
-
-Possible future directions include:
-
-- Collaboration
-- Cloud synchronization
-- Mobile companion app
-- Plugin marketplace
-- Multiple AI providers
-- Real-time graph collaboration
-
-These ideas are intentionally outside the current scope.
+Collaboration, cloud synchronization, richer temporal exploration, mobile clients, and multiple AI providers remain possible but do not define v0.1.
